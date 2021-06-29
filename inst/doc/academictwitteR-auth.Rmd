@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In order to use the Twitter Academic Research Product Track you will first need to obtain an authorization token. You will find details about the process of obtaining authorization [here](https://developer.twitter.com/en/solutions/academic-research/application-info). 
+In order to use the Twitter Academic Research Product Track you will first need to obtain an authorization token. You will find additional details about the process of obtaining authorization on the Twitter Developer platform.
 
 **In order to gain authorization you first need a Twitter account.**
 
@@ -89,4 +89,7 @@ Beside the panel for Bearer Token, you will see an option to Regenerate the toke
 ![](files/twitterdev6.png){width=80%}
 </center>
 
-Once you have the Bearer Token, you are ready to use `academictwitteR`!
+Once you have the Bearer Token, you are ready to use `academictwitteR`.
+
+It is not advisable to save your bearer token within your scripts. Instead, we advise saving it as an environment variable. Please consult `?get_bearer` for more details.
+

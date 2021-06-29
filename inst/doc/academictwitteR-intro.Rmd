@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This vignette provides a quick tour of the R package `academictwitteR`. The package is useful solely for querying the Twitter Academic Research Product Track v2. API endpoint. This version of the Twitter API allows researchers to access larger volumes of Twitter data. For more information on the the Twitter API, including how to apply for access to the Academic Research Product Track, see [here](https://developer.twitter.com/en/solutions/academic-research/products-for-researchers).
+This vignette provides an introduction to the R package `academictwitteR`. The package is useful solely for querying the Twitter Academic Research Product Track v2. API endpoint. 
+
+This version of the Twitter API allows researchers to access larger volumes of Twitter data. For more information on the the Twitter API, including how to apply for access to the Academic Research Product Track, see the Twitter Developer platform.
 
 The following vignette will guide you through how to use the package.
 
@@ -25,11 +27,11 @@ We will begin by describing the thinking behind the development of this package 
 
 ## The Twitter Academic Research Product Track
 
-The Academic Research Product Track permits the user to access larger volumes of data, over a far longer time range, than was previously possible. From the Twitter [documentation](https://developer.twitter.com/en/solutions/academic-research/application-info):
+The Academic Research Product Track permits the user to access larger volumes of data, over a far longer time range, than was previously possible. From the Twitter release for the new track:
 
 > "The Academic Research product track includes full-archive search, as well as increased access and other v2 endpoints and functionality designed to get more precise and complete data for analyzing the public conversation, at no cost for qualifying researchers. Since the Academic Research track includes specialized, greater levels of access, it is reserved solely for non-commercial use".
 
-The new "v2 endpoints" refer to the v2 API, introduced around the same time as the new Academic Research Product Track. Full details of the v2 endpoints are available [here](https://developer.twitter.com/en/docs/twitter-api/early-access).
+The new "v2 endpoints" refer to the v2 API, introduced around the same time as the new Academic Research Product Track. Full details of the v2 endpoints are available on the Twitter Developer platform.
 
 In summary the Academic Research product track allows the authorized user:
 
@@ -37,8 +39,9 @@ In summary the Academic Research product track allows the authorized user:
 2. A higher monthly tweet cap (10m--or 20x what was previously possible with the standard v1.1 API)
 3. Ability to access these data with more precise filters permitted by the v2 API
 
+## Setting up your bearer token
 
-## Querying the Twitter API with `academictwitteR`
+Please refer to [this vignette](academictwitteR-auth.html) on how to obtain your own bearer token. You can supply this bearer token in every request. The more advisable and secure approach is to set up your bearer token in your .Renviron file.
 
 We begin by loading the package with:
 
@@ -46,22 +49,64 @@ We begin by loading the package with:
 library(academictwitteR)
 ```
 
-The workhorse function of `academictwitteR` when it comes to collecting tweets containing a particular string or hashtag is `get_all_tweets()`.
+And then launch `set_bearer`. This will open your .Renviron file in the home directory. Enter your bearer token as below (the bearer token used below is not real).
+
+![](files/TWITTER_BEARER.gif){width=75%}
+
+**For this environment variable to be recognized, you first have to restart R** 
+
+You can then obtain your bearer token with `get_bearer`. This is also the default for all data collection functions.
+
+You can check that this works with: 
+
+```{r, eval = FALSE}
+get_bearer()
+```
+
+```{r, echo=F}
+dummy_bearer <- "AAAAAAAAAAAAAAAAAAAAAPwXWFFlLLDVC6G0PFo4shkDVg02DwVxGQIVKvhPVE3vdV"
+dummy_bearer
+
+```
+
+## Querying the Twitter API with `academictwitteR`
+
+The workhorse function of `academictwitteR` for collecting tweets is `get_all_tweets()`.
 
 ```{r, eval=F}
 
 tweets <-
   get_all_tweets(
-    "#BLM OR #BlackLivesMatter",
-    "2020-01-01T00:00:00Z",
-    "2020-01-05T00:00:00Z",
-    bearer_token,
+    query = "#BlackLivesMatter",
+    start_tweets = "2020-01-01T00:00:00Z",
+    end_tweets = "2020-01-05T00:00:00Z",
     file = "blmtweets"
   )
   
 ```
 
-Here, we are collecting tweets containing one or both of two hashtags related to the Black Lives Matter movement over the period January 1, 2020 to January 5, 2020. 
+Here, we are collecting tweets containing a hashtag related to the Black Lives Matter movement over the period January 1, 2020 to January 5, 2020. 
+
+Note that once we have stored our bearer token with set_bearer, it will be called within the function automatically.
+
+This query will only capture a maximum of 100 tweets as we have not changed the default 
+
+If you have not set your bearer token, you can do also do so within the function as follows:
+
+```{r, eval=F}
+
+tweets <-
+  get_all_tweets(
+    query = "#BlackLivesMatter",
+    start_tweets = "2020-01-01T00:00:00Z",
+    end_tweets = "2020-01-05T00:00:00Z",
+    bearer_token = "AAAAAAAAAAAAAAAAAAAAAPwXWFFlLLDVC6G0Pg02DwVxGQIVKTHISISNOTAREALTOKEN",
+    file = "blmtweets"
+  )
+  
+```
+
+This is **not** recommended as by convention it is not advisable to keep API authorization tokens within your scripts. 
 
 ## Storage conventions in `academictwitteR`
 
@@ -77,34 +122,38 @@ Alternatively, the user can specify a `data_path` as follows:
 
 tweets <-
   get_all_tweets(
-    "#BLM OR #BlackLivesMatter",
-    "2020-01-01T00:00:00Z",
-    "2020-01-05T00:00:00Z",
-    bearer_token,
-    data_path = "data/"
-    bind_tweets = FALSE
+    query = "#BlackLivesMatter",
+    start_tweets = "2015-01-01T00:00:00Z",
+    end_tweets = "2020-01-05T00:00:00Z",
+    data_path = "data/",
+    bind_tweets = FALSE,
+    n= 1000000
   )
   
 ```
 
-In the data path, the user can either specify a directory that already exists or name a new directory. In other words, if there is already a folder in your working directory called "data" then `get_all_tweets` will find it and store data there. If there is no such directory, then a directory named (here) "data" will be created in your working directory for the purposes of data storage.
+In the data path, the user can either specify a directory that already exists or name a new directory.
 
 The data is stored in this folder as a series of JSONs. Tweet-level data is stored as a series of JSONs beginning "data_"; User-level data is stored as a series of JSONs beginning "users_".
 
-Note that the `get_all_tweets()` function always returns a data.frame object unless `data_path` is specified and `bind_tweets` is set to `FALSE`. When collecting large amounts of data, we recommend using the `data_path` option with `bind_tweets = FALSE`. This mitigates potential data loss in case the query is interrupted, and avoids system memory usage errors.
+Note that the `get_all_tweets()` function always returns a data.frame object unless `data_path` is specified and `bind_tweets` is set to `FALSE`. 
+
+When collecting large amounts of data, we recommend using the `data_path` option with `bind_tweets = FALSE`. This mitigates potential data loss in case the query is interrupted, and avoids system memory usage errors.
+
+Note finally that here we are setting an upper limit of tweets of one million. The default limit is set to 100. **For almost all applications, users will wish to change this**. We can also set `n = Inf` if we do not require any upper limit. This will collect all available tweets matching the query. 
 
 ## Binding JSON files into data.frame objects
 
-Users can then use the `bind_tweet_jsons` and `bind_user_jsons` convenience functions to bundle the JSONs into a data.frame object for analysis in R as such:
+When `bind_tweets` is `FALSE`, no data.frame object will be returned. In order to get the tweets into a data.frame, you can then use the `bind_tweets()` helper function to bundle the JSONs into a data.frame object for analysis in R as such:
 
 ```{r, eval=FALSE}
-
-tweets <- bind_tweet_jsons(data_path = "data/")
-
+tweets <- bind_tweets(data_path = "data/")
 ```
+
+If you want to bundle together the user-level data, you can achieve this with the same helper function. The only change is that `user` is now set to `TRUE`, meaning we want to bundle user-level data:
 
 ```{r, eval=FALSE}
-
-users <- bind_user_jsons(data_path = "data/")
-
+users <- bind_tweets(data_path = "data/", user = TRUE)
 ```
+
+Note: v0.2 of the package incorporates functionality to convert JSONs into multiple data frame formats. Most usefully, these additions permit the incorporation of user-level and tweet-level data into a single tibble.

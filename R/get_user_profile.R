@@ -14,16 +14,8 @@
 #' users <- c("2244994945", "6253282")
 #' get_user_profile(users, bearer_token)
 #' }
-get_user_profile <- function(x, bearer_token){
-  if(missing(bearer_token)){
-    stop("bearer token must be specified.")  
-  }
-  if(substr(bearer_token,1,7)=="Bearer "){
-    bearer <- bearer_token
-  } else{
-    bearer <- paste0("Bearer ",bearer_token)
-  }
-  
+get_user_profile <- function(x, bearer_token = get_bearer()){
+  bearer_token <- check_bearer(bearer_token)
   #endpoint
   url <- "https://api.twitter.com/2/users"
   
@@ -43,26 +35,7 @@ get_user_profile <- function(x, bearer_token){
       "ids" = paste(slice, collapse = ","),
       "user.fields" = "created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld"
     )
-    # Sending GET Request
-    r <- httr::GET(url,httr::add_headers(Authorization = bearer), query=params)
-    
-    # Fix random 503 errors
-    count <- 0
-    while(httr::status_code(r)==503 & count<4){
-      r <- httr::GET(url,httr::add_headers(Authorization = bearer),query=params)
-      count <- count+1
-      Sys.sleep(count*5)
-    }
-    
-    # Catch other errors
-    if(httr::status_code(r)!=200){
-      stop(paste("something went wrong. Status code:", httr::status_code(r)))
-    }
-    if(httr::headers(r)$`x-rate-limit-remaining`=="1"){
-      warning(paste("x-rate-limit-remaining=1. Resets at",as.POSIXct(as.numeric(httr::headers(r)$`x-rate-limit-reset`), origin="1970-01-01")))
-    }
-    
-    dat <- jsonlite::fromJSON(httr::content(r, "text"))
+    dat <- make_query(url = url, params = params, bearer_token = bearer_token, verbose = TRUE)
     # rownames(dat) <- NULL
     new_df <- dplyr::bind_rows(new_df, dat$data) # add new rows
   }

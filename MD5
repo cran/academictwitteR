@@ -1,13 +1,13 @@
-0d9be864e6c681c6b996a50a24b83827 *DESCRIPTION
+0036316c3983db68e6d825312f695685 *DESCRIPTION
 9292e9c9780a317656a9c211cd7c83ab *LICENSE
 529acc7eb4c399e046331ec87313e7cd *NAMESPACE
-e9cfee4ad323f6078c14eccf1503b489 *NEWS.md
+430bd4a31ef6febc9222e2643bf5e830 *NEWS.md
 af9d3a86422b1ee4158ffecea910f6c9 *R/bind_tweets.R
 322cf14d13749e77fb402821bb7ab199 *R/build_queryv2.R
 27616cdd5e24593338de710e93049d40 *R/count_all_tweets.R
 413b43a9fc1996b0aceb605be13c1582 *R/deprecated_functions.R
 d41d8cd98f00b204e9800998ecf8427e *R/flat.R
-f41508f51d612c73040270c54ac61519 *R/get_all_tweets.R
+bd99f6ab7b42119be4bd5426dea6a1ec *R/get_all_tweets.R
 ab78fcbcecdc842f74461890f544ce30 *R/get_bearer.R
 7b6759da69615f5d3784a4f88971ab4d *R/get_liked_tweets.R
 7f44f1d527fbeae2a432a7addcaded70 *R/get_liking_users.R
@@ -18,7 +18,7 @@ fdf052e5cec33dd4c7e465d34ffa6152 *R/get_user_edges.R
 799902b52110c0997e006c2ea4b4ed64 *R/set_bearer.R
 3c57b76834b45234201739eeec023c6c *R/update_collection.R
 b56ff2b193ecba52f9ec7f3b10cca008 *R/utils-pipe.R
-20c7b58987c6cc57e531a6b69efe702d *R/utils.R
+0a6f16bb2eab825b364235bf378fba15 *R/utils.R
 7ef9aa43558062d34193123a10c0ec24 *README.md
 4a159e08ff98eb515749dfef8d249b35 *build/vignette.rds
 c7a7a30b0317b7a9fdc544173cab6a1a *inst/CITATION
@@ -48,7 +48,7 @@ eb658279c61232041c783077e6dadf9c *man/bind_tweet_jsons.Rd
 c7b4b2fda6bbf770864c2b56a283860e *man/figures/academictwitteRhex.png
 11b0b618e50b0ab9f47ff0afdce9164f *man/figures/athena.png
 01d28ca232454b9149977e4e7ce92bb9 *man/figures/hexsticker.R
-b9598fac36c81d25b452f5983b96da6a *man/get_all_tweets.Rd
+d64f7b218e2a2eeebf926e9b180439d4 *man/get_all_tweets.Rd
 5324175f7d96bacae7ae686fbb7c2065 *man/get_bbox_tweets.Rd
 6d61a5d314af35b6b1f1e1d69b91b2cd *man/get_bearer.Rd
 525900fb01f065786aa27bd887acbd45 *man/get_country_tweets.Rd
@@ -74,9 +74,9 @@ d4c40ff804a5ea09e709f403d64e8991 *man/get_video_tweets.Rd
 d68d8f5c3229d6beea9733f006910b8e *man/resume_collection.Rd
 e44b9e9cce2725e7dcde64bc0a055142 *man/set_bearer.Rd
 2de3d183ea4f8fdfa81c259299f409d7 *man/update_collection.Rd
-2b8b54fb38eb72d8d7ef28091f6fdb22 *tests/testdata/commtwitter/data_1399005777138962433.json
-88f96ff0217265135932bd2da3648488 *tests/testdata/commtwitter/query
-91de934d1cd04dc3630495e864b6b2c9 *tests/testdata/commtwitter/users_1399005777138962433.json
+d68fd9eb9413d80b027b3f51e77ac7f1 *tests/testdata/commtwitter/data_1399765322509557763.json
+69e33551197930f3f8404cb945a922ee *tests/testdata/commtwitter/query
+e32fb0815cb953d85cd76d9d0032dff0 *tests/testdata/commtwitter/users_1399765322509557763.json
 0395b611f766b9befa7cc76916a05304 *tests/testthat.R
 e6a0de0007c123bc74fc36a0fc6a419b *tests/testthat/setup.R
 65a047c982e2aeb6d3803d553dafbc1b *tests/testthat/test-bind_tweets.R

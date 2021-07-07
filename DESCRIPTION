@@ -1,7 +1,7 @@
 Package: academictwitteR
 Title: Access the Twitter Academic Research Product Track V2 API
         Endpoint
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     c(person(given = "Christopher",
            family = "Barrie",
@@ -38,10 +38,10 @@ Suggests: knitr, rmarkdown, devtools, testthat (>= 3.0.0), httptest,
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-06-29 15:07:40 UTC; cbarrie6
+Packaged: 2021-07-05 17:16:08 UTC; cbarrie6
 Author: Christopher Barrie [aut, cre] (<https://orcid.org/0000-0002-9156-990X>),
   Justin Chun-ting Ho [aut] (<https://orcid.org/0000-0002-7884-1059>),
   Chung-hong Chan [ctb] (<https://orcid.org/0000-0002-6232-7530>)
 Maintainer: Christopher Barrie <christopher.barrie@ed.ac.uk>
 Repository: CRAN
-Date/Publication: 2021-06-29 15:20:02 UTC
+Date/Publication: 2021-07-07 11:10:02 UTC

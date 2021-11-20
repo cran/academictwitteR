@@ -9,6 +9,7 @@
 #' a character object query string to be input as query parameter to \code{\link{get_all_tweets}}.
 #'
 #' @param query string or character vector, search query or queries
+#' @param exact_phrase If `TRUE`, only tweets will be returned matching the exact phrase
 #' @param users string or character vector, user handles to collect tweets from the specified users
 #' @param reply_to string or character vector, user handles to collect replies to the specified users
 #' @param retweets_of string or character vector, user handles to collects retweets of tweets by the specified users
@@ -58,6 +59,7 @@
 #' @importFrom utils menu
 #'
 build_query <- function(query = NULL,
+                        exact_phrase = NULL,
                         users = NULL,
                         reply_to = NULL,
                         retweets_of = NULL,
@@ -85,6 +87,10 @@ build_query <- function(query = NULL,
   
   if(isTRUE(length(query) >1)) {
     query <- paste("(",paste(query, collapse = " OR "),")", sep = "")
+  }
+  
+  if(isTRUE(exact_phrase)){
+    query <- paste0("\"", query, "\"")
   }
   
   if(!is.null(users)){

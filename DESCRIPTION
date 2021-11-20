@@ -1,7 +1,7 @@
 Package: academictwitteR
 Title: Access the Twitter Academic Research Product Track V2 API
         Endpoint
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: 
     c(person(given = "Christopher",
            family = "Barrie",
@@ -17,7 +17,12 @@ Authors@R:
 	   family = "Chan",
 	   role = c("ctb"),
 	   email = "chainsawtiney@gmail.com",
-	   comment = c(ORCID = "0000-0002-6232-7530")))
+	   comment = c(ORCID = "0000-0002-6232-7530")),
+	   person(given = "Noelia",
+	   family = "Rico",
+	   role = c("ctb"),
+	   email = "noeliarico@uniovi.es",
+	   comment = c(ORCID = "0000-0002-6169-4523")))
 Description: Package to query the Twitter Academic Research Product Track,
     providing access to full-archive search and other v2 API endpoints. Functions
     are written with academic research in mind. They provide flexibility in how 
@@ -29,7 +34,7 @@ License: MIT + file LICENSE
 URL: https://github.com/cjbarrie/academictwitteR
 BugReports: https://github.com/cjbarrie/academictwitteR/issues
 Encoding: UTF-8
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.2
 Depends: R (>= 3.4)
 Imports: dplyr (>= 1.0.0), httr, jsonlite, magrittr, lubridate,
         usethis, tibble, tidyr, tidyselect, purrr, rlang
@@ -38,10 +43,11 @@ Suggests: knitr, rmarkdown, devtools, testthat (>= 3.0.0), httptest,
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-07-05 17:16:08 UTC; cbarrie6
+Packaged: 2021-11-20 12:54:29 UTC; cbarrie6
 Author: Christopher Barrie [aut, cre] (<https://orcid.org/0000-0002-9156-990X>),
   Justin Chun-ting Ho [aut] (<https://orcid.org/0000-0002-7884-1059>),
-  Chung-hong Chan [ctb] (<https://orcid.org/0000-0002-6232-7530>)
+  Chung-hong Chan [ctb] (<https://orcid.org/0000-0002-6232-7530>),
+  Noelia Rico [ctb] (<https://orcid.org/0000-0002-6169-4523>)
 Maintainer: Christopher Barrie <christopher.barrie@ed.ac.uk>
 Repository: CRAN
-Date/Publication: 2021-07-07 11:10:02 UTC
+Date/Publication: 2021-11-20 13:10:02 UTC

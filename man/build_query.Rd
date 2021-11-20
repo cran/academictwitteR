@@ -6,6 +6,7 @@
 \usage{
 build_query(
   query = NULL,
+  exact_phrase = NULL,
   users = NULL,
   reply_to = NULL,
   retweets_of = NULL,
@@ -34,6 +35,8 @@ build_query(
 }
 \arguments{
 \item{query}{string or character vector, search query or queries}
+
+\item{exact_phrase}{If \code{TRUE}, only tweets will be returned matching the exact phrase}
 
 \item{users}{string or character vector, user handles to collect tweets from the specified users}
 

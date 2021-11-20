@@ -6,7 +6,7 @@
 [![](https://www.r-pkg.org/badges/version/academictwitteR)](https://cran.r-project.org/package=academictwitteR)
 ![Downloads](https://cranlogs.r-pkg.org/badges/academictwitteR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/academictwitteR)](https://cran.r-project.org/package=academictwitteR)
-[![Codecov test coverage](https://codecov.io/gh/cjbarrie/academictwitteR/branch/master/graph/badge.svg)](https://codecov.io/gh/cjbarrie/academictwitteR?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/cjbarrie/academictwitteR/branch/master/graph/badge.svg)]( https://app.codecov.io/gh/cjbarrie/academictwitteR?branch=master)
 <!-- badges: end -->
 
 
@@ -67,8 +67,6 @@ Tweets are returned as a data.frame object and, when a `file` argument has been 
 When collecting large amounts of data, we recommend the workflow described below, which allows the user : 1) to efficiently store authorization credentials; 2) to efficiently store returned data; 3) bind the data into a data.frame object or tibble ;4) resume collection in case of interruption; and 5) update collection in case of need.
 
 ## Authorization
-
-**The following demo refers to the development version of the package**.
 
 The first task is set authorization credentials with the `set_bearer()` function, which allows the user to store their bearer token in the .Renviron file.
 
@@ -169,6 +167,36 @@ get_all_tweets(
 
 , which will capture tweets containing *both* the words "twitter" and "social." The same logics apply for hashtag queries.
 
+Whereas if we specify our query as separate elements of a character vector like this:
+
+```r
+
+get_all_tweets(
+  query = c("twitter", "social"),
+  users = c("cbarrie", "jack"),
+  start_tweets = "2020-01-01T00:00:00Z",
+  end_tweets = "2020-05-01T00:00:00Z",
+  n = 1000
+)
+
+```
+, this will be capturing tweets by users @cbarrie or @jack containing the words "twitter" *or* social. 
+
+Finally, we may wish to query an exact phrase. To do so, we can either input the phrase in escape quotes, e.g., `query ="\"Black Lives Matter\""` or we can use the optional parameter `exact_phrase = T` (in devt. version) to search for tweets containing the exact phrase string:
+
+```r
+
+tweets <-
+  get_all_tweets(
+    query = "Black Lives Matter",
+    exact_phrase = T,
+    start_tweets = "2021-01-04T00:00:00Z",
+    end_tweets = "2021-01-04T00:45:00Z",
+    n = Inf
+  )
+
+```
+
 See the vignette documentation `vignette("academictwitteR-build")` for further information on building more complex API calls.
 
 ## Data storage
@@ -223,15 +251,15 @@ For more information on the parameters and fields available from the v2 Twitter 
 | Arguments   |     Description      |
 |----------|:-------------:|
 |query | Search query or queries e.g. "cat"
-|exclude | Tweets containing the keyword(s) will be excluded "grumpy" e.g.
+|exact_phrase | If `TRUE`, only tweets will be returned matching the exact phrase
+|users | string or character vector, user handles to collect tweets from the specified users
+|reply_to | string or character vector, user handles to collect replies to the specified users
+|retweets_of| string or character vector, user handles to collects retweets of tweets by the specified users
+|exclude | string or character vector, tweets containing the keyword(s) will be excluded
 |is_retweet | If `TRUE`, only retweets will be returned; if `FALSE`, retweets will not be returned, only tweets will be returned; if `NULL`, both retweets and tweets will be returned.
 |is_reply | If `TRUE`, only reply tweets will be returned
 |is_quote | If `TRUE`, only quote tweets will be returned
 |is_verified |If `TRUE`, only tweets whose authors are verified by Twitter will be returned
-|place | Name of place e.g. "London"
-|country | Name of country as ISO alpha-2 code e.g. "GB"
-|point_radius | A vector of two point coordinates latitude, longitude, and point radius distance (in miles)
-|bbox | A vector of four bounding box coordinates from west longitude to north latitude
 |remove_promoted | If `TRUE`, tweets created for promotion only on ads.twitter.com are removed
 |has_hashtags | If `TRUE`, only tweets containing hashtags will be returned
 |has_cashtags | If `TRUE`, only tweets containing cashtags will be returned
@@ -241,8 +269,17 @@ For more information on the parameters and fields available from the v2 Twitter 
 |has_images |If `TRUE`, only tweets containing a recognized URL to an image will be returned
 |has_videos |If `TRUE`, only tweets containing contain native Twitter videos, uploaded directly to Twitter will be returned
 |has_geo |If `TRUE`, only tweets containing Tweet-specific geolocation data provided by the Twitter user will be returned
+|place | Name of place e.g. "London"
+|country | Name of country as ISO alpha-2 code e.g. "GB"
+|point_radius | A vector of two point coordinates latitude, longitude, and point radius distance (in miles)
+|bbox | A vector of four bounding box coordinates from west longitude to north latitude
 |lang | A single BCP 47 language identifier e.g. "fr"
+|url | string, return tweets containing specified url
+|conversation_id| string, return tweets that share the specified conversation ID
 
+## Batch Compliance
+
+There are three functions to work with Twitter's Batch Compliance endpoints: `create_compliance_job()` creates a new compliance job and upload the dataset; `list_compliance_jobs` lists all created jobs and their job status; `get_compliance_result()` downloads the result.
 
 ## Acknowledgements
 

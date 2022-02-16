@@ -164,23 +164,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In order to extract user information, it is additionally necessary to set <code>user = TRUE</code>. Please also note that the data frame returned in this format is not a tibble. As such, we first need to convert it to a tibble.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_tweets</span>(<span class="at">data_path =</span> <span class="st">&quot;tweetdata&quot;</span>) <span class="sc">%&gt;%</span> as_tibble</span></code></pre></div>
 <pre><code>#&gt; ================================================================================
-#&gt; # A tibble: 25 x 14
-#&gt;    public_metrics$retwee… $reply_count $like_count $quote_count conversation_id 
-#&gt;                     &lt;int&gt;        &lt;int&gt;       &lt;int&gt;        &lt;int&gt; &lt;chr&gt;           
-#&gt;  1                     48            0           0            0 140600740518034…
-#&gt;  2                      4            0           0            0 140561738640589…
-#&gt;  3                      4            0           0            0 140561604799096…
-#&gt;  4                      4            0           0            0 140561505555576…
-#&gt;  5                      4            0           0            0 140561306496840…
-#&gt;  6                      4            0          35            0 140561072402663…
-#&gt;  7                      0            0           1            0 140539303355899…
-#&gt;  8                      0            0           1            0 140480875185768…
-#&gt;  9                     20            1         113            2 140444092988126…
-#&gt; 10                      0            0           0            0 140439345742735…
-#&gt; # … with 15 more rows, and 12 more variables: author_id &lt;chr&gt;,
-#&gt; #   entities &lt;df[,3]&gt;, text &lt;chr&gt;, lang &lt;chr&gt;, created_at &lt;chr&gt;, id &lt;chr&gt;,
-#&gt; #   possibly_sensitive &lt;lgl&gt;, referenced_tweets &lt;list&gt;, source &lt;chr&gt;,
-#&gt; #   geo &lt;df[,1]&gt;, context_annotations &lt;list&gt;, in_reply_to_user_id &lt;chr&gt;</code></pre>
+#&gt; # A tibble: 25 × 14
+#&gt;    public_metrics$retwee… conversation_id author_id entities$mentio… text  lang 
+#&gt;                     &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;list&gt;           &lt;chr&gt; &lt;chr&gt;
+#&gt;  1                     48 14060074051803… 58755490  &lt;df [1 × 3]&gt;     &quot;RT … de   
+#&gt;  2                      4 14056173864058… 97759337… &lt;df [1 × 3]&gt;     &quot;RT … de   
+#&gt;  3                      4 14056160479909… 13065071… &lt;df [1 × 3]&gt;     &quot;RT … de   
+#&gt;  4                      4 14056150555557… 97897581… &lt;df [1 × 3]&gt;     &quot;RT … de   
+#&gt;  5                      4 14056130649684… 114774406 &lt;df [1 × 3]&gt;     &quot;RT … de   
+#&gt;  6                      4 14056107240266… 47919307  &lt;named list [0]&gt; &quot;Ihr… de   
+#&gt;  7                      0 14053930335589… 94052353… &lt;df [2 × 3]&gt;     &quot;👩‍💻…  und  
+#&gt;  8                      0 14048087518576… 47919307  &lt;df [1 × 3]&gt;     &quot;.@j… de   
+#&gt;  9                     20 14044409298812… 11508518… &lt;named list [0]&gt; &quot;Oka… de   
+#&gt; 10                      0 14043934574273… 30635588… &lt;named list [0]&gt; &quot;#Ic… und  
+#&gt; # … with 15 more rows, and 13 more variables: public_metrics$reply_count &lt;int&gt;,
+#&gt; #   $like_count &lt;int&gt;, $quote_count &lt;int&gt;, entities$hashtags &lt;list&gt;,
+#&gt; #   $urls &lt;list&gt;, created_at &lt;chr&gt;, id &lt;chr&gt;, possibly_sensitive &lt;lgl&gt;,
+#&gt; #   referenced_tweets &lt;list&gt;, source &lt;chr&gt;, geo &lt;df[,1]&gt;,
+#&gt; #   context_annotations &lt;list&gt;, in_reply_to_user_id &lt;chr&gt;</code></pre>
 <p>The second format is the “raw” format. It is a list of data frames containing all of the data extracted in the API call. Please note that not all data frames are in Boyce-Codd 3rd Normal form, i.e. some columns are still list-column.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_tweets</span>(<span class="at">data_path =</span> <span class="st">&quot;tweetdata&quot;</span>, <span class="at">output_format =</span> <span class="st">&quot;raw&quot;</span>) <span class="sc">%&gt;%</span> names</span></code></pre></div>
 <pre><code>#&gt;  [1] &quot;tweet.public_metrics.retweet_count&quot;  &quot;tweet.public_metrics.reply_count&quot;   
@@ -195,28 +196,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; [19] &quot;sourcetweet.main&quot;</code></pre>
 <p>The third format is the “tidy” format. It is an “opinionated” format, which we believe to contain all essential columns for social media research. By default, it is a tibble.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_tweets</span>(<span class="at">data_path =</span> <span class="st">&quot;tweetdata&quot;</span>, <span class="at">output_format =</span> <span class="st">&quot;tidy&quot;</span>)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 25 x 31
-#&gt;    tweet_id  user_username  text      conversation_id author_id lang  created_at
-#&gt;    &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     
-#&gt;  1 14060074… Phardiga       &quot;RT @Tob… 14060074051803… 58755490  de    2021-06-1…
-#&gt;  2 14056173… dorothee_goet… &quot;RT @Tob… 14056173864058… 97759337… de    2021-06-1…
-#&gt;  3 14056160… dejools        &quot;RT @Tob… 14056160479909… 13065071… de    2021-06-1…
-#&gt;  4 14056150… LenaOetzel     &quot;RT @Tob… 14056150555557… 97897581… de    2021-06-1…
-#&gt;  5 14056130… jenniferhenke… &quot;RT @Tob… 14056130649684… 114774406 de    2021-06-1…
-#&gt;  6 14056107… Tobias_Schulze &quot;Ihr sei… 14056107240266… 47919307  de    2021-06-1…
-#&gt;  7 14053930… HTMIBerlin     &quot;👩‍💻👩‍💻👩‍💻👩‍… 14053930335589… 94052353… und   2021-06-1…
-#&gt;  8 14048087… Tobias_Schulze &quot;.@jsued… 14048087518576… 47919307  de    2021-06-1…
-#&gt;  9 14044409… ASattelmacher  &quot;Okay al… 14044409298812… 11508518… de    2021-06-1…
-#&gt; 10 14043934… dr_john_aus_b  &quot;#Ichbin… 14043934574273… 30635588… und   2021-06-1…
+<pre><code>#&gt; # A tibble: 25 × 31
+#&gt;    tweet_id       user_username text  conversation_id author_id lang  created_at
+#&gt;    &lt;chr&gt;          &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     
+#&gt;  1 1406007405180… Phardiga      &quot;RT … 14060074051803… 58755490  de    2021-06-1…
+#&gt;  2 1405617386405… dorothee_goe… &quot;RT … 14056173864058… 97759337… de    2021-06-1…
+#&gt;  3 1405616047990… dejools       &quot;RT … 14056160479909… 13065071… de    2021-06-1…
+#&gt;  4 1405615055555… LenaOetzel    &quot;RT … 14056150555557… 97897581… de    2021-06-1…
+#&gt;  5 1405613064968… jenniferhenk… &quot;RT … 14056130649684… 114774406 de    2021-06-1…
+#&gt;  6 1405610724026… Tobias_Schul… &quot;Ihr… 14056107240266… 47919307  de    2021-06-1…
+#&gt;  7 1405393033558… HTMIBerlin    &quot;👩‍💻…  14053930335589… 94052353… und   2021-06-1…
+#&gt;  8 1404808751857… Tobias_Schul… &quot;.@j… 14048087518576… 47919307  de    2021-06-1…
+#&gt;  9 1404440929881… ASattelmacher &quot;Oka… 14044409298812… 11508518… de    2021-06-1…
+#&gt; 10 1404393457427… dr_john_aus_b &quot;#Ic… 14043934574273… 30635588… und   2021-06-1…
 #&gt; # … with 15 more rows, and 24 more variables: possibly_sensitive &lt;lgl&gt;,
 #&gt; #   source &lt;chr&gt;, in_reply_to_user_id &lt;chr&gt;, user_url &lt;chr&gt;,
 #&gt; #   user_verified &lt;lgl&gt;, user_name &lt;chr&gt;, user_protected &lt;lgl&gt;,
 #&gt; #   user_profile_image_url &lt;chr&gt;, user_description &lt;chr&gt;,
 #&gt; #   user_created_at &lt;chr&gt;, user_pinned_tweet_id &lt;chr&gt;, user_location &lt;chr&gt;,
 #&gt; #   retweet_count &lt;int&gt;, like_count &lt;int&gt;, quote_count &lt;int&gt;,
-#&gt; #   user_tweet_count &lt;int&gt;, user_list_count &lt;int&gt;, user_followers_count &lt;int&gt;,
-#&gt; #   user_following_count &lt;int&gt;, sourcetweet_type &lt;chr&gt;, sourcetweet_id &lt;chr&gt;,
-#&gt; #   sourcetweet_text &lt;chr&gt;, sourcetweet_lang &lt;chr&gt;, sourcetweet_author_id &lt;chr&gt;</code></pre>
+#&gt; #   user_tweet_count &lt;int&gt;, user_list_count &lt;int&gt;, …</code></pre>
 <p>It has the following features / caveats:</p>
 <ol style="list-style-type: decimal">
 <li>It has both the data about tweets, their authors, and “source tweets”, a.k.a. referenced tweets. Columns are named according to these three sources. The primary keys of these three sources are named <code>tweet_id</code>, <code>author_id</code> and <code>sourcetweet_id</code> respectively.</li>

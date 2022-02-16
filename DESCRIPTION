@@ -1,7 +1,7 @@
 Package: academictwitteR
 Title: Access the Twitter Academic Research Product Track V2 API
         Endpoint
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Christopher",
            family = "Barrie",
@@ -11,7 +11,7 @@ Authors@R:
            person(given = "Justin Chun-ting",
            family = "Ho",
            role = c("aut"),
-           email = "justin.chunting.ho@sciencespo.fr",
+           email = "justinho@gate.sinica.edu.tw",
            comment = c(ORCID = "0000-0002-7884-1059")),
 	   person(given = "Chung-hong",
 	   family = "Chan",
@@ -22,7 +22,16 @@ Authors@R:
 	   family = "Rico",
 	   role = c("ctb"),
 	   email = "noeliarico@uniovi.es",
-	   comment = c(ORCID = "0000-0002-6169-4523")))
+	   comment = c(ORCID = "0000-0002-6169-4523")),
+	   person(given = "Tim",
+	   family = "König",
+	   role = c("ctb"),
+	   comment = c(ORCID = "0000-0002-2852-2690")),
+	   person(given = "Thomas",
+	   family = "Davidson",
+	   role = c("ctb"),
+	   email = "thomas.davidson@rutgers.edu",
+	   comment = c(ORCID = "0000-0002-5947-7490")))
 Description: Package to query the Twitter Academic Research Product Track,
     providing access to full-archive search and other v2 API endpoints. Functions
     are written with academic research in mind. They provide flexibility in how 
@@ -37,17 +46,19 @@ Encoding: UTF-8
 RoxygenNote: 7.1.2
 Depends: R (>= 3.4)
 Imports: dplyr (>= 1.0.0), httr, jsonlite, magrittr, lubridate,
-        usethis, tibble, tidyr, tidyselect, purrr, rlang
+        usethis, tibble, tidyr, tidyselect, purrr, rlang, utils
 Suggests: knitr, rmarkdown, devtools, testthat (>= 3.0.0), httptest,
         lifecycle, covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-11-20 12:54:29 UTC; cbarrie6
+Packaged: 2022-02-16 14:29:41 UTC; cbarrie6
 Author: Christopher Barrie [aut, cre] (<https://orcid.org/0000-0002-9156-990X>),
   Justin Chun-ting Ho [aut] (<https://orcid.org/0000-0002-7884-1059>),
   Chung-hong Chan [ctb] (<https://orcid.org/0000-0002-6232-7530>),
-  Noelia Rico [ctb] (<https://orcid.org/0000-0002-6169-4523>)
+  Noelia Rico [ctb] (<https://orcid.org/0000-0002-6169-4523>),
+  Tim König [ctb] (<https://orcid.org/0000-0002-2852-2690>),
+  Thomas Davidson [ctb] (<https://orcid.org/0000-0002-5947-7490>)
 Maintainer: Christopher Barrie <christopher.barrie@ed.ac.uk>
 Repository: CRAN
-Date/Publication: 2021-11-20 13:10:02 UTC
+Date/Publication: 2022-02-16 15:20:09 UTC
